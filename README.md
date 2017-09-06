@@ -58,10 +58,6 @@
 
 ## File Structure
 
-###### app/
-
-Contains development CSS, JS and images, sorted into corresponding directories.
-
 ###### public/
 
 Contains the production ready CSS, JS and images built from the app/ directory.
@@ -350,10 +346,6 @@ function changePizzaSizes(size) {
 ## Optimization Breakdown (tl;dr)
 
 ### Index Page
-
-###### Google PageSpeed Score before any fixes
-
-![Breakdown Image 11](readme_images/breakdown-01.png)
 
 ###### Google PageSpeed Score after fixes
 
