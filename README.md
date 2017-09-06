@@ -56,83 +56,7 @@
 * <a href="http://getbootstrap.com/css/">Bootstrap CSS</a>
 * <a href="http://getbootstrap.com/components/">Bootstrap组件</a>
 
-## File Structure
-
-###### public/
-
-Contains the production ready CSS, JS and images built from the app/ directory.
-
-###### views/
-
-Contains the HTML for the pizza and individual project pages.
-
-## The Build
-
-The [Brunch](http://brunch.io) HTML5 build tool is used to concatenate and minify scripts and style sheets in this project.
-
-###### Install Brunch
-
-```
-$ npm install -g brunch
-```
-
-###### Develop
-
-```
-$ brunch watch --server
-```
-
-###### Build
-
-```
-$ brunch build --production
-```
-
-Detailed documentation can be found [here](https://github.com/brunch/brunch/tree/stable/docs).
-
-## Optimization
-
-### Index Page
-
-The index page originally had a Google PageSpeed score of 35/100 for mobile and 47/100 for desktop. After making changes the score increased to [99/100](https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Foptimization.mikejoyce.io) for both mobile and desktop. Interestingly enough, the only thing that is preventing a score of 100/100 is Google's own analytics script.
-
-The following changes were made:
-
-###### - CSS
-
-[Inlined](https://developers.google.com/speed/pagespeed/module/filter-css-inline) all of the CSS into the head of the document and added the HTML [media="print"](https://developer.mozilla.org/de/docs/Web/HTML/Element/link) attribute to the external style sheet link for print styles.
-
-###### - JS
-
-Added the [HTML async attribute](https://developer.mozilla.org/en-US/docs/Games/Techniques/Async_scripts) to all script tags and used the [Brunch](http://brunch.io/) build tool to concatenate and minify.
-
-###### - Images
-
-Resized images that were too large and compressed all images with the [Kraken](https://kraken.io/web-interface) image compression tool.
-
-###### - Gzip compression
-
-Enabled the [mod_deflate](http://httpd.apache.org/docs/2.2/mod/mod_deflate.html) (gzip) Apache module on the server.
-
-###### - Browser Caching
-
-Leveraged [browser caching](https://developers.google.com/speed/docs/insights/LeverageBrowserCaching) by including an [.htaccess](http://httpd.apache.org/docs/2.2/howto/htaccess.html) file in the root of the website. The file contains expires headers, which sets long expiration times for all CSS, JavaScript and images.
-
-### Sliding Pizzas
-
-The following changes where made to fix the low FPS and produce a consistent 60FPS frame rate when scrolling the page:
-
-###### - Fixed Typo
-
-Renamed the mis-named 'noise' value in the global adjectives array literal to ‘noisy’ to match the switch case ‘noisy’ in the getAdj function.
-
-```js
-var adjectives = ["dark", "color", "whimsical", "shiny", "noisy", "apocalyptic", "insulting", "praise", "scientific"];`
-```
-
-###### - Optimized Loops
-
-Optimized the loops contained in the updatePositions function and the onDOMContentLoaded event handler.
+###### - Optimized Part1
 
 ```js
 function updatePositions() {
@@ -174,9 +98,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 ```
 
-###### - Reduced Pizza Elements
+###### - Optimized Part2
 
-Reduced the amount of sliding pizza elements generated from 200 down to 31, which still sufficiently fills the screen with sliding pizzas.
 
 ```js
 document.addEventListener('DOMContentLoaded', function() {
@@ -196,9 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 ```
 
-###### - Improved CSS Animation Performance
-
-Applied translateX() and translateZ(0) transform functions to the sliding pizza elements within the updatePositions function.
+###### - ###### - Optimized Part3
 
 
 ```js
@@ -225,9 +146,8 @@ function updatePositions() {
 }
 ```
 
-###### - Improved Efficiency
+###### - Optimized Part4
 
-Moved the calculation which utilizes the scrollTop method outside of the loop.
 
 ```js
 function updatePositions() {
@@ -255,9 +175,7 @@ function updatePositions() {
 }
 ```
 
-###### - Reduced Browser Paint Events
-
-Removed height and width styles from the generated pizza elements and resized the pizza image to 100 x 100 to prevent the browser from having to resize the images.
+###### - Optimized Part5
 
 ```js
 document.addEventListener('DOMContentLoaded', function() {
@@ -275,9 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 ```
 
-###### - Optimized Animations
-
-Added the updatePositions function as a parameter to the window.requestAnimationFrame method in the scroll event listener which optimizes concurrent animations together into a single reflow and repaint cycle.
+###### - Optimized Part6
 
 ```js
 window.addEventListener('scroll', function() {
@@ -285,13 +201,7 @@ window.addEventListener('scroll', function() {
 });
 ```
 
-### Resized Pizzas
-
-The following changes were made to resize the pizzas in under 5ms:
-
-###### - Improved Efficiency
-
-Moved the determineDx function call inside the changePizzaSizes function out of the loop. Selected only the first .randomPizzaContainer in the document.
+###### - Optimized Part7
 
 ```js
 function changePizzaSizes(size) {
@@ -303,7 +213,7 @@ function changePizzaSizes(size) {
 }
 ```
 
-Moved the newwidth calculation inside the changePizzaSizes function out of the loop. Again, selected only the first .randomPizzaContainer element in the document.
+after
 
 ```js
 function changePizzaSizes(size) {
@@ -315,7 +225,7 @@ function changePizzaSizes(size) {
 }
 ```
 
-Created a new variable to hold all of the .randomPizzaContainer elements in the document and looped through the elements to apply the new width value.
+Then
 
 ```js
 function changePizzaSizes(size) {
@@ -328,9 +238,7 @@ function changePizzaSizes(size) {
 }
 ```
 
-###### - Optimized Loops
-
-Optimized loop inside the changePizzaSizes function.
+###### - Optimized Part8
 
 ```js
 function changePizzaSizes(size) {
@@ -343,44 +251,22 @@ function changePizzaSizes(size) {
 }
 ```
 
-## Optimization Breakdown (tl;dr)
-
-### Index Page
-
-###### Google PageSpeed Score after fixes
+### Performance
 
 ![Breakdown Image 12](readme_images/breakdown-02.png)
 
-### Sliding Pizzas
-
-###### FPS before any fixes
-
 ![Breakdown Image 01](readme_images/breakdown-03.png)
-
-###### After fixing mis-named adjectives array literal value
 
 ![Breakdown Image 02](readme_images/breakdown-04.png)
 
-###### After optimizing loops
-
 ![Breakdown Image 03](readme_images/breakdown-05.png)
-
-###### After reducing the number of sliding pizzas generated from 200 to 31
 
 ![Breakdown Image 04](readme_images/breakdown-06.png)
 
-###### After applying translateX() and translateZ(0) transform functions to the sliding pizza elements
-
 ![Breakdown Image 05](readme_images/breakdown-07.png)
-
-###### After moving a calculation utlizing the scrollTop property outside of a loop
 
 ![Breakdown Image 06](readme_images/breakdown-08.png)
 
-###### After removing height & width styles from pizza image tag and resizing the image
-
 ![Breakdown Image 07](readme_images/breakdown-09.png)
-
-###### After including window.requestAnimationFrame method within scroll event handler
 
 ![Breakdown Image 08](readme_images/breakdown-10.png)
